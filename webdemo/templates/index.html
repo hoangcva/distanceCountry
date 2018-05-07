@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Khoảng cách hai đất nước</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+
+    .row.content {
+      height: 1500px
+    }
+
+    /* Set gray background color and 100% height */
+
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {
+        height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col-sm-2 sidenav">
+        <h3>Khoảng cách hai đất nước</h3>
+        <div class="form-group">
+          <label for="methodw2v">Chọn phương pháp word embedding:</label>
+          <select class="form-control" id="methodw2v" name="methodw2v">
+            <option value=word2vec_skipgram>word2vec_skipgram</option>
+            <option value=word2vec_cbow>word2vec_cbow</option>
+            <option value=Spacy>Spacy</option>
+            <option value=fastText>fastText</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="country1">Chọn nước thứ 1:</label>
+          <select class="form-control" id="country1" name="country1">
+            {% for country in countries %}
+            <option value={{country}}>{{country}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="country2">Chọn nước thứ 2:</label>
+          <select class="form-control" id="country2" name="country2">
+            {% for country in countries %}
+            <option value={{country}}>{{country}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <label>Khoảng cách là  :</label><label id="result" class="text-danger"></label>
+        <br/>
+        <button type="button" class="btn btn-primary" id="submit">Submit</button>
+      </div>
+      <div class="col-sm-9 ">
+        {{ div_placeholder }}
+      </div>
+    </div>
+  </div>
+
+  <footer class="container-fluid">
+    <p>Footer Text</p>
+  </footer>
+
+</body>
+
+<script>
+  $(document).ready(function(){
+    // set value method word embbeding
+    var pathname = window.location.pathname;
+    var methodw2v = pathname.split('/')[2];
+    if(methodw2v){
+      $("methodw2v, select").val(methodw2v);
+    }else{
+      $("methodw2v, select").val("word2vec_gensim");
+    }
+
+    // event submit return distane of countries
+    $("#submit").click(function () {
+    country1 = $("#country1").val();
+    country2 = $("#country2").val();
+    methodw2v = $("#methodw2v").val();
+    object = {};
+    object["country1"] = country1;
+    object["country2"] = country2;
+    object["methodw2v"] = methodw2v;
+    json = JSON.stringify(object)
+    $.post("/query",
+      json,
+      function (data) {
+        $("#result").text(data);
+      });
+  });
+  $('#methodw2v').change(function() {
+    var val = $("#methodw2v option:selected").text();
+    window.location.replace('http://127.0.0.1:5000/method/'+val);
+  });
+  })
+</script>
+
+</html>

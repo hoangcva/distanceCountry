@@ -1,0 +1,1 @@
+Anh công bố danh sách các hãng hàng không bị cấm bayDanh sách bao gồm những hãng hàng không - thuộc 8 nước - không được phép hoạt động tại nước này. Trong đó, tất cả các máy bay đến từ Guinea Xích đạo, Gambia, Liberia, và Tajikistan bị cấm hoàn toàn.

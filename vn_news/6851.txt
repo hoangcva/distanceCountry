@@ -1,0 +1,1 @@
+Nguyên lý kích nổ bom nhiệt hạchBom nhiệt hạch ứng dụng thiết kế kép, gồm tầng sơ cấp là một quả bom phân hạch và tầng thứ cấp là nhiên liệu cho phản ứng tổng hợp.
